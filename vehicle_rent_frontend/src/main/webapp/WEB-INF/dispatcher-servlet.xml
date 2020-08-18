@@ -12,7 +12,7 @@
    ">
 
     <context:component-scan base-package="com.lhu.controller" />
-    <context:component-scan base-package="com.lahiru" />
+    <context:component-scan base-package="com.lhu.vehicle_rent_backend.businessLogic" />
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/jsp/" />

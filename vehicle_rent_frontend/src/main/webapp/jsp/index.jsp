@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+
 <spring:url var="bootsrap" value="/resources/bootsrap" />
 <spring:url var="css" value="/resources/css" />
 <spring:url var="js" value="/resources/js" />
@@ -26,41 +27,54 @@
 	rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Lato"
 	rel="stylesheet" type="text/css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	
+<script src="${js}/jQuery/jquery.js"></script>
 <script src="${bootsrap}/js/bootstrap.min.js"></script>
+
 <link href="${css}/homepage.css" rel="stylesheet">
 <script src="${js}/homepage.js"></script>
 </head>
 
-	<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-		<nav class="navbar navbar-default navbar-fixed-top"> 
-		   <%@include file="navbar.jsp"%> 
-		 </nav>
-	
-		<div class="jumbotron text-center">
-			<%@include file="form.jsp"%>
-		</div>	
-	
+<body id="myPage" data-spy="scroll" data-target=".navbar"
+	data-offset="60">
+
+	<nav class="navbar navbar-default navbar-fixed-top"> <%@include
+		file="homePageContext/navbar.jsp"%> </nav>
+	<div id="errRes"></div>
+	<div class="jumbotron text-center">
+		<%@include file="homePageContext/form.jsp"%>
+	</div>
+
+
+	<button type="button" data-toggle="modal" data-target="#bookVehicle"
+		id="bookModelShowingBtn" hidden>Open Modal</button>
+
+	<!-- Modal -->
+	<%@include file="modal/bookVehicle.jsp"%>
+	<%@include file="modal/modal.jsp"%>
+	<%@include file="modal/newVehicleModal.jsp"%>
+	<br>
+	<div class="data">
 		<!-- Container (Main Section) -->
 		<div id="data" class="container-fluid">
-			<%@include file="serchVecle.jsp"%>
-		</div>	
-	
-		<%@include file="about.jsp"%>
-	
-		<!-- Container (Services Section) -->
-		<div id="services" class="container-fluid text-center">
-			<%@include file="services.jsp"%>
-		</div>	
-	
-		<!-- Container (Contact Section) -->
-		<div id="contact" class="container-fluid bg-grey">
-			<%@include file="contact.jsp"%>
-		</div>	
-	
-		<%@include file="footer.jsp"%>
-	</body>
+			<%@include file="homePageContext/availableVehicle.jsp"%>
+		</div>
+	</div>
+	<!-- Container (About Section) -->
+	<div id="about" class="container-fluid text-center">
+		<%@include file="homePageContext/about.jsp"%>
+	</div>
+
+	<!-- Container (Services Section) -->
+	<div id="services" class="container-fluid text-center">
+		<%@include file="homePageContext/services.jsp"%>
+	</div>
+
+	<!-- Container (Contact Section) -->
+	<div id="contact" class="container-fluid bg-grey">
+		<%@include file="homePageContext/contact.jsp"%>
+	</div>
+
+	<%@include file="homePageContext/footer.jsp"%>
+</body>
 
 </html>
