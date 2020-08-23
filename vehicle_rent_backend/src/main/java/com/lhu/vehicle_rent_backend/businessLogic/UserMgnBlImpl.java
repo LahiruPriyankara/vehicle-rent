@@ -19,21 +19,22 @@ import com.lhu.vehicle_rent_backend.DTO.Vehicle;
 @Repository("userMgnBl")
 public class UserMgnBlImpl implements UserMgnBl {
 	private static final Log log = LogFactory.getLog(UserMgnBlImpl.class);
-	
+
 	@Autowired
 	UserMng userMngImpl;
 	@Autowired
 	VehicleMng vehicleMngImpl;
 	@Autowired
 	BookMng bookMngImpl;
-	
-	//----------------------------------------  USER  ----------------------------------------	
+
+	// ---------------------------------------- USER
+	// ----------------------------------------
 	@Override
-	public User getUser(String email,String password) {
+	public User getUser(String email, String password) {
 		log.debug("Enter | addUser");
-		return userMngImpl.getUser(email,password);
+		return userMngImpl.getUser(email, password);
 	}
-	
+
 	@Override
 	public boolean addUser(User user) {
 		log.debug("Enter | addUser");
@@ -57,17 +58,21 @@ public class UserMgnBlImpl implements UserMgnBl {
 		log.debug("Enter | getUsers");
 		return userMngImpl.getUsers();
 	}
-	//----------------------------------------  VEHICLE  ----------------------------------------
+
+	// ---------------------------------------- VEHICLE
+	// ----------------------------------------
 	@Override
 	public boolean addVehicle(Vehicle vehicle) {
 		log.debug("Enter | addVehicle");
 		return vehicleMngImpl.modifyVehicle(vehicle, 1);
 	}
+
 	@Override
 	public Vehicle getVehicle(int id) {
 		log.debug("Enter | getVehicle");
 		return vehicleMngImpl.getVehicle(id);
 	}
+
 	@Override
 	public List<Vehicle> getVehicles() {
 		log.debug("Enter | getVehicles");
@@ -85,7 +90,15 @@ public class UserMgnBlImpl implements UserMgnBl {
 		log.debug("Enter | deleteVehicle");
 		return vehicleMngImpl.modifyVehicle(vehicle, 3);
 	}
-//----------------------------------------  BOOKING  ----------------------------------------
+
+	@Override
+	public List<Vehicle> getVehiclesByUser(User user) {
+		log.debug("Enter | getVehiclesById");
+		return vehicleMngImpl.getVehiclesByUser(user);
+	}
+
+	// ---------------------------------------- BOOKING
+	// ----------------------------------------
 	@Override
 	public boolean addBook(Book book) {
 		log.debug("Enter | addBook");
@@ -115,5 +128,11 @@ public class UserMgnBlImpl implements UserMgnBl {
 		log.debug("Enter | getBooks");
 		return bookMngImpl.getBooks();
 	}
-	
+
+	@Override
+	public List<Book> getBooksByUser(User user) {
+		log.debug("Enter | getBooksById");
+		return bookMngImpl.getBooksByUser(user);
+	}
+
 }

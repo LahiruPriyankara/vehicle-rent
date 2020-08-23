@@ -44,7 +44,7 @@
 		      </button>
               </li>
               <li>
-		      <a href="${contextRoot}/vehicle_rent_backend/User/singOff/<%= loggedUser.getId() %>" style="margin-top:-5px">
+		      <a href="${contextRoot}/vehicle_rent_backend/User/singOff" style="margin-top:-5px">
                  <img src="${images}/signOff.png" alt="" style="width: 30px; height: 30px;">
               </a>
               </li>

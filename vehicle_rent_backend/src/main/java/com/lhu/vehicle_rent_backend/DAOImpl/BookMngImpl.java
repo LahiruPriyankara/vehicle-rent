@@ -2,21 +2,18 @@ package com.lhu.vehicle_rent_backend.DAOImpl;
 // Generated Aug 16, 2020 8:38:22 AM by Hibernate Tools 4.3.1.Final
 
 import java.util.List;
-import javax.naming.InitialContext;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Example;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lhu.vehicle_rent_backend.DAO.BookMng;
 import com.lhu.vehicle_rent_backend.DTO.Book;
-import com.lhu.vehicle_rent_backend.DTO.Vehicle;
+import com.lhu.vehicle_rent_backend.DTO.User;
 import com.lhu.vehicle_rent_backend.config.DbConfig;
 
 /**
@@ -92,6 +89,23 @@ public class BookMngImpl implements BookMng {
 			return null;
 		} finally {
 			log.debug("Left | getBooks");
+			session.close();
+		}
+	}
+	
+	@Override
+	public List<Book> getBooksByUser(User user) {
+		try {
+			log.debug("Enter | getBooksById");
+			session = DbConfig.sessionBulder();
+			Query query = session.createQuery("from Book where user =" + user);
+			List<Book> list = query.list();
+			log.debug("Info | getBooks list.size() : " + list.size());
+			return list;
+		} catch (Exception e) {
+			return null;
+		} finally {
+			log.debug("Left | getBooksById");
 			session.close();
 		}
 	}

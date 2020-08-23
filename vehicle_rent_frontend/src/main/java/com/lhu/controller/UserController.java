@@ -100,7 +100,7 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "singOff/{id}")
+	@RequestMapping(value = "singOff")
 	public String singOff(HttpServletRequest request) {
 		log.debug("Enter | singOff");
 		try {
@@ -130,7 +130,7 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "edit/{id}")
+	@RequestMapping(value = "edit")
 	public String edit(@Valid @ModelAttribute("user") User user, BindingResult results, Model model,
 			HttpServletRequest request) {
 		log.debug("Enter | edit");

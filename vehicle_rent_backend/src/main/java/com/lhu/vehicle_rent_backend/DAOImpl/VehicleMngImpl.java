@@ -90,5 +90,20 @@ public class VehicleMngImpl implements VehicleMng {
 			session.close();
 		}
 	}
-
+	@Override
+	public List<Vehicle> getVehiclesByUser(User user) {
+		try {
+			log.debug("Enter | getVehiclesById");
+			session = DbConfig.sessionBulder();
+			Query query = session.createQuery("from Vehicle where user ="+user);
+			List<Vehicle> list = query.list();
+			log.debug("Info | getVehicles list.size() : " + list.size());
+			return list;
+		} catch (Exception e) {
+			return null;
+		} finally {
+			log.debug("Left | getVehiclesById");
+			session.close();
+		}
+	}
 }
