@@ -24,6 +24,7 @@
                    AddNew
                </button>
 			</li>
+			
 			<li>
 				&nbsp;&nbsp;&nbsp;
 				<button id="control" type="button" class="btn btn-xs"
