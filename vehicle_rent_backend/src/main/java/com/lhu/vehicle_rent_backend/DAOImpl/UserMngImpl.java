@@ -17,7 +17,7 @@ import com.lhu.vehicle_rent_backend.DAO.UserMng;
 import com.lhu.vehicle_rent_backend.DTO.User;
 import com.lhu.vehicle_rent_backend.config.DbConfig;
 
-@Repository("userMng")
+@Repository("userMngImpl")
 @Transactional
 public class UserMngImpl implements UserMng {
 
@@ -49,7 +49,7 @@ public class UserMngImpl implements UserMng {
 	}
 
 	@Override
-	public User modifyUser(User user, int actionType) {
+	public boolean modifyUser(User user, int actionType) {
 
 		log.debug("Enter | modifyUser");
 		try {
@@ -69,10 +69,10 @@ public class UserMngImpl implements UserMng {
 
 			session.getTransaction().commit();
 			log.debug("persist successful");
-			return user;
+			return true;
 		} catch (Exception e) {
 			log.error("persist failed", e);
-			return null;
+			return false;
 		} finally {
 			log.debug("Left | modifyUser");
 			session.close();

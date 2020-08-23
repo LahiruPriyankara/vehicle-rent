@@ -8,19 +8,18 @@
 			<div class="modal-header" style="background-color: black">
 				<div class="row">
 					<div class="tab col-md-10">
-						<button class="tablinks" onclick="loginAction(event, 'singIn')"
-							id="defaultOpen">singIn</button>
-						<button class="tablinks" onclick="loginAction(event, 'singUp')">singUp</button>
+						<button class="tablinks" onclick="tabActive(event, 'singIn')" id="defaultOpen" style="padding: 0px 10px 0px 10px;width: 30%">singIn</button>
+						<button class="tablinks" onclick="tabActive(event, 'singUp')" style="padding: 0px 10px 0px 10px;width: 30%">singUp</button>
 					</div>
 					<div class="col-md-2">
 						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close" id="closeLogModal">
+							aria-label="Close" id="closeUserModal">
 							<span aria-hidden="true" style="color: #ffffff"><b>&times;</b></span>
 						</button>
 					</div>
 				</div>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body"><div id="editBooking" class="tabcontent"><h3>HI 02</h3></div>
 				<div id="singIn" class="tabcontent">
 					<sf:form class="form-horizontal" modelAttribute="user"
 						action="${contextRoot}/vehicle_rent_backend/User/singIn"
@@ -38,6 +37,7 @@
 							<div class="col-md-10 validate">
 								<sf:input type="password" path="password" class="form-control"
 									placeholder="**********" />
+									<sf:errors path="password" cssClass="errorMsg" element="em"/> 
 							</div>
 						</div>
 
@@ -65,6 +65,7 @@
 							<div class="col-md-10 validate">
 								<sf:input type="text" path="email" class="form-control"
 									placeholder="abc@gmail.com" />
+									<sf:errors path="file" cssClass="help-block" element="em"/> 
 							</div>
 						</div>
 						<div class="form-group">

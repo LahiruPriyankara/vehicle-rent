@@ -115,13 +115,14 @@ h4 {
 	font-family: Montserrat, sans-serif;
 }
 
-.navbar li a, .navbar .navbar-brand {
+.navbar-nav li a, .navbar .navbar-brand {
 	color: #ffffff;
 }
 
 .navbar-nav li a:hover, .navbar-nav li.active a {
 	color: #ffffff !important;
 	background-color: #ffffff;
+	font-size:15px;
 }
 
 .navbar-default .navbar-toggle {
@@ -391,4 +392,8 @@ font-size
 */
 #vehicleDiv{
   cursor: pointer;
+}
+
+.errorMsg {
+	color: red;
 }

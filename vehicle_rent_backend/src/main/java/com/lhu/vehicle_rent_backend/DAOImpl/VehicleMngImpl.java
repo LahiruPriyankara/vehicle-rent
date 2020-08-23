@@ -19,7 +19,7 @@ import com.lhu.vehicle_rent_backend.DTO.User;
 import com.lhu.vehicle_rent_backend.DTO.Vehicle;
 import com.lhu.vehicle_rent_backend.config.DbConfig;
 
-@Repository("userMng")
+@Repository("vehicleMngImpl")
 @Transactional
 public class VehicleMngImpl implements VehicleMng {
 	Session session;
@@ -27,7 +27,7 @@ public class VehicleMngImpl implements VehicleMng {
 	private static final Log log = LogFactory.getLog(VehicleMngImpl.class);
 
 	@Override
-	public Vehicle modifyVehicle(Vehicle vehicle, int actionType) {
+	public boolean modifyVehicle(Vehicle vehicle, int actionType) {
 
 		log.debug("Enter | modifyVehicle");
 		try {
@@ -47,10 +47,10 @@ public class VehicleMngImpl implements VehicleMng {
 
 			session.getTransaction().commit();
 			log.debug("persist successful");
-			return vehicle;
+			return true;
 		} catch (Exception e) {
 			log.error("persist failed", e);
-			return null;
+			return false;
 		} finally {
 			log.debug("Left | modifyVehicle");
 			session.close();
@@ -64,6 +64,7 @@ public class VehicleMngImpl implements VehicleMng {
 			session = DbConfig.sessionBulder();
 			Query query = session.createQuery("from Vehicle where id ="+id);
 			Vehicle vehicle = (Vehicle)query.uniqueResult();
+			System.out.println("Info | Vehicle : "+vehicle.to_String());
 			return vehicle;
 		} catch (Exception e) {
 			return null;

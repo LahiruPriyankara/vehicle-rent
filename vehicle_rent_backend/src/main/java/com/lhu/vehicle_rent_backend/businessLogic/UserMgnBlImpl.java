@@ -4,11 +4,15 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.lhu.vehicle_rent_backend.DAO.BookMng;
 import com.lhu.vehicle_rent_backend.DAO.UserMng;
-import com.lhu.vehicle_rent_backend.DAOImpl.UserMngImpl;
+import com.lhu.vehicle_rent_backend.DAO.VehicleMng;
+import com.lhu.vehicle_rent_backend.DAOImpl.BookMngImpl;
 import com.lhu.vehicle_rent_backend.DAOImpl.VehicleMngImpl;
+import com.lhu.vehicle_rent_backend.DTO.Book;
 import com.lhu.vehicle_rent_backend.DTO.User;
 import com.lhu.vehicle_rent_backend.DTO.Vehicle;
 
@@ -16,56 +20,100 @@ import com.lhu.vehicle_rent_backend.DTO.Vehicle;
 public class UserMgnBlImpl implements UserMgnBl {
 	private static final Log log = LogFactory.getLog(UserMgnBlImpl.class);
 	
-	//@Autowired
-	UserMng userMng = new UserMngImpl();
+	@Autowired
+	UserMng userMngImpl;
+	@Autowired
+	VehicleMng vehicleMngImpl;
+	@Autowired
+	BookMng bookMngImpl;
 	
-	VehicleMngImpl vehicleMng= new VehicleMngImpl();
-	
-	
+	//----------------------------------------  USER  ----------------------------------------	
 	@Override
 	public User getUser(String email,String password) {
 		log.debug("Enter | addUser");
-		return userMng.getUser(email,password);
+		return userMngImpl.getUser(email,password);
 	}
 	
 	@Override
-	public User addUser(User user) {
+	public boolean addUser(User user) {
 		log.debug("Enter | addUser");
-		return userMng.modifyUser(user, 1);
+		return userMngImpl.modifyUser(user, 1);
 	}
 
 	@Override
-	public User updateUser(User user) {
+	public boolean updateUser(User user) {
 		log.debug("Enter | updateUser");
-		return userMng.modifyUser(user, 2);
+		return userMngImpl.modifyUser(user, 2);
 	}
 
 	@Override
-	public User deleteUser(User user) {
+	public boolean deleteUser(User user) {
 		log.debug("Enter | deleteUser");
-		return userMng.modifyUser(user, 3);
+		return userMngImpl.modifyUser(user, 3);
 	}
 
 	@Override
 	public List<User> getUsers() {
 		log.debug("Enter | getUsers");
-		return userMng.getUsers();
+		return userMngImpl.getUsers();
 	}
-
+	//----------------------------------------  VEHICLE  ----------------------------------------
 	@Override
-	public void addVehicle(Vehicle vehicle) {
+	public boolean addVehicle(Vehicle vehicle) {
 		log.debug("Enter | addVehicle");
-		vehicleMng.modifyVehicle(vehicle, 1);
+		return vehicleMngImpl.modifyVehicle(vehicle, 1);
 	}
 	@Override
 	public Vehicle getVehicle(int id) {
-		log.debug("Enter | getUsers");
-		return vehicleMng.getVehicle(id);
+		log.debug("Enter | getVehicle");
+		return vehicleMngImpl.getVehicle(id);
 	}
 	@Override
 	public List<Vehicle> getVehicles() {
-		log.debug("Enter | getUsers");
-		return vehicleMng.getVehicles();
+		log.debug("Enter | getVehicles");
+		return vehicleMngImpl.getVehicles();
+	}
+
+	@Override
+	public boolean updateVehicle(Vehicle vehicle) {
+		log.debug("Enter | updateVehicle");
+		return vehicleMngImpl.modifyVehicle(vehicle, 2);
+	}
+
+	@Override
+	public boolean deleteVehicle(Vehicle vehicle) {
+		log.debug("Enter | deleteVehicle");
+		return vehicleMngImpl.modifyVehicle(vehicle, 3);
+	}
+//----------------------------------------  BOOKING  ----------------------------------------
+	@Override
+	public boolean addBook(Book book) {
+		log.debug("Enter | addBook");
+		return bookMngImpl.modifyBook(book, 1);
+	}
+
+	@Override
+	public boolean updateBook(Book book) {
+		log.debug("Enter | updateBook");
+		return bookMngImpl.modifyBook(book, 2);
+	}
+
+	@Override
+	public boolean deleteBook(Book book) {
+		log.debug("Enter | deleteBook");
+		return bookMngImpl.modifyBook(book, 3);
+	}
+
+	@Override
+	public Book getBook(int id) {
+		log.debug("Enter | getBook");
+		return bookMngImpl.getBook(id);
+	}
+
+	@Override
+	public List<Book> getBooks() {
+		log.debug("Enter | getBooks");
+		return bookMngImpl.getBooks();
 	}
 	
 }

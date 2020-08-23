@@ -1,23 +1,6 @@
 <div class="modal fade" id="bookVehicle" role="dialog" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabel" style="margin-top: 5%">
-	<!-- <div class="modal-dialog">
-    
-      Modal content
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
- -->
+
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header"
@@ -29,45 +12,70 @@
 					</div>
 					<div class="col-md-2">
 						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close" id="closeAddnewModal">
+							aria-label="Close" id="closeBookModal">
 							<span aria-hidden="true" style="color: #ffffff"><b>&times;</b></span>
 						</button>
 					</div>
 				</div>
 			</div>
 			<div class="modal-body">
-				<form>
+				<form
+					action="${contextRoot}/vehicle_rent_backend/book/addNewBooking"
+					method="POST">
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" style="text-align: right;">Name</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="vName" id="vName" readonly="readonly" style="background-color:#d9d9d9">
-							<input type="hidden" class="form-control" name="vId" id="vId">
+							<input type="text" class="form-control" name="vName" id="vName"
+								readonly="readonly" style="background-color: #d9d9d9"> <input
+								type="hidden" class="form-control" name="vId" id="vId">
 						</div>
 
 						<label class="col-sm-2 col-form-label" style="text-align: right;">Number</label>
 						<div class="col-sm-4">
 							<input type="text" class="form-control" name="vNumber"
-								id="vNumber" readonly="readonly" style="background-color:#d9d9d9">
+								id="vNumber" readonly="readonly"
+								style="background-color: #d9d9d9">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" style="text-align: right;">Condition</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="condition" id="condition" readonly="readonly" style="background-color:#d9d9d9">
+							<input type="text" class="form-control" name="condition"
+								id="condition" readonly="readonly"
+								style="background-color: #d9d9d9">
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label" style="text-align: right;">Per Km</label>
+						<label class="col-sm-2 col-form-label" style="text-align: right;">Per
+							Km</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="perKm" id="perKm" readonly="readonly" style="background-color:#d9d9d9">
+							<input type="text" class="form-control" name="perKm" id="perKm"
+								readonly="readonly" style="background-color: #d9d9d9">
 						</div>
 
-						<label class="col-sm-2 col-form-label" style="text-align: right;">Per Day</label>
+						<label class="col-sm-2 col-form-label" style="text-align: right;">Per
+							Day</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="PerDay" id="PerDay" readonly="readonly" style="background-color:#d9d9d9">
+							<input type="text" class="form-control" name="PerDay" id="PerDay"
+								readonly="readonly" style="background-color: #d9d9d9">
 						</div>
 					</div>
 					<hr>
+					
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label" style="text-align: right;">PickUp
+							Point</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="pPoint" id="pPoint">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label" style="text-align: right;">PickOff
+							point</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="dPoint" id="dPoint">
+						</div>
+					</div>
 					<div class="form-group row">
 						<label class="col-sm-3 col-form-label" style="text-align: right;">Duration(KM)</label>
 						<div class="col-sm-3">
@@ -80,40 +88,36 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-sm-3 col-form-label" style="text-align: right;">PickUp Point</label>
+						<label class="col-sm-3 col-form-label" style="text-align: right;">Date</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" name="pPoint" id="pPoint">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label" style="text-align: right;">DropOff point</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" name="dPoint" id="dPoint">
+							<input type="text" class="form-control" name="dateTime" id="dateTime">
 						</div>
 					</div>
 
-
 					<div class="form-group row">
-						<label class="col-sm-3 col-form-label" style="text-align: right;">With a Driver</label>
+						<label class="col-sm-3 col-form-label" style="text-align: right;">With
+							a Driver</label>
 						<div class="col-sm-1">
 							<input type="radio" class="form-control" value="withDriver"
-								name="withOrWithOutDriver">
+								name="withOrWithOutDriver" checked>
 						</div>
 
-						<label class="col-sm-3 col-form-label" style="text-align: right;">WithOut a Driver</label>
+						<label class="col-sm-3 col-form-label" style="text-align: right;">WithOut
+							a Driver</label>
 						<div class="col-sm-1">
 							<input type="radio" class="form-control" value="withOutDriver"
 								name="withOrWithOutDriver">
 						</div>
 					</div>
 					<div class="form-group row">
-					    <label class="col-sm-3 col-form-label"></label>
+						<label class="col-sm-3 col-form-label"></label>
 						<div class="col-sm-3">
 							<button type="button" style="width: 100%;">Calculate</button>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-sm-3 col-form-label" style="text-align: right;">Average Cost</label>
+						<label class="col-sm-3 col-form-label" style="text-align: right;">Average
+							Cost</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="aCost" id="aCost">
 						</div>
@@ -127,8 +131,7 @@
 					</div>
 				</form>
 				<h5>
-					Contact Number : <span style="color: blue" id="contactDetails">077
-						1278571(Nilantha)</span>
+					Contact : <span style="color: blue" id="contactDetails"></span>
 				</h5>
 			</div>
 		</div>

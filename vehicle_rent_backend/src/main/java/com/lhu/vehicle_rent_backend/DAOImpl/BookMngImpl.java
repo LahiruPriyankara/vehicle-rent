@@ -6,115 +6,94 @@ import javax.naming.InitialContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.lhu.vehicle_rent_backend.DAO.BookMng;
 import com.lhu.vehicle_rent_backend.DTO.Book;
+import com.lhu.vehicle_rent_backend.DTO.Vehicle;
+import com.lhu.vehicle_rent_backend.config.DbConfig;
 
 /**
  * Home object for domain model class Book.
+ * 
  * @see com.lhu.vehicle_rent_backend.DTO.Book
  * @author Hibernate Tools
  */
 @Repository("bookMngImpl")
-public class BookMngImpl {
-
+@Transactional
+public class BookMngImpl implements BookMng {
+	Session session;
 	private static final Log log = LogFactory.getLog(BookMngImpl.class);
 
-	private final SessionFactory sessionFactory = getSessionFactory();
+	@Override
+	public boolean modifyBook(Book book, int actionType) {
 
-	protected SessionFactory getSessionFactory() {
+		log.debug("Enter | modifyBook");
 		try {
-			return (SessionFactory) new InitialContext().lookup("SessionFactory");
-		} catch (Exception e) {
-			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
-		}
-	}
 
-	public void persist(Book transientInstance) {
-		log.debug("persisting Book instance");
-		try {
-			sessionFactory.getCurrentSession().persist(transientInstance);
-			log.debug("persist successful");
-		} catch (RuntimeException re) {
-			log.error("persist failed", re);
-			throw re;
-		}
-	}
+			session = DbConfig.sessionBulder();
 
-	public void attachDirty(Book instance) {
-		log.debug("attaching dirty Book instance");
-		try {
-			sessionFactory.getCurrentSession().saveOrUpdate(instance);
-			log.debug("attach successful");
-		} catch (RuntimeException re) {
-			log.error("attach failed", re);
-			throw re;
-		}
-	}
-
-	public void attachClean(Book instance) {
-		log.debug("attaching clean Book instance");
-		try {
-			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
-			log.debug("attach successful");
-		} catch (RuntimeException re) {
-			log.error("attach failed", re);
-			throw re;
-		}
-	}
-
-	public void delete(Book persistentInstance) {
-		log.debug("deleting Book instance");
-		try {
-			sessionFactory.getCurrentSession().delete(persistentInstance);
-			log.debug("delete successful");
-		} catch (RuntimeException re) {
-			log.error("delete failed", re);
-			throw re;
-		}
-	}
-
-	public Book merge(Book detachedInstance) {
-		log.debug("merging Book instance");
-		try {
-			Book result = (Book) sessionFactory.getCurrentSession().merge(detachedInstance);
-			log.debug("merge successful");
-			return result;
-		} catch (RuntimeException re) {
-			log.error("merge failed", re);
-			throw re;
-		}
-	}
-
-	public Book findById(int id) {
-		log.debug("getting Book instance with id: " + id);
-		try {
-			Book instance = (Book) sessionFactory.getCurrentSession().get("com.lhu.vehicle_rent_backend.DTO.Book", id);
-			if (instance == null) {
-				log.debug("get successful, no instance found");
+			Transaction tx = session.beginTransaction();
+			if (actionType == 1) {
+				session.save(book);
+			} else if (actionType == 2) {
+				session.update(book);
+			} else if (actionType == 3) {
+				session.delete(book);
 			} else {
-				log.debug("get successful, instance found");
+				throw new Exception("Invalid Action Type");
 			}
-			return instance;
-		} catch (RuntimeException re) {
-			log.error("get failed", re);
-			throw re;
+
+			session.getTransaction().commit();
+			log.debug("persist successful");
+			return true;
+		} catch (Exception e) {
+			log.error("persist failed", e);
+			return false;
+		} finally {
+			log.debug("Left | modifyBook");
+			session.close();
 		}
 	}
 
-	public List findByExample(Book instance) {
-		log.debug("finding Book instance by example");
+	@Override
+	public Book getBook(int id) {
 		try {
-			List results = sessionFactory.getCurrentSession().createCriteria("com.lhu.vehicle_rent_backend.DTO.Book")
-					.add(Example.create(instance)).list();
-			log.debug("find by example successful, result size: " + results.size());
-			return results;
-		} catch (RuntimeException re) {
-			log.error("find by example failed", re);
-			throw re;
+			log.debug("Enter | getBook");
+			session = DbConfig.sessionBulder();
+			Query query = session.createQuery("from Book where id =" + id);
+			Book book = (Book) query.uniqueResult();
+			System.out.println("Info | Vehicle : " + book.to_String());
+			return book;
+		} catch (Exception e) {
+			return null;
+		} finally {
+			log.debug("Left | getBook");
+			session.close();
 		}
 	}
+
+	@Override
+	public List<Book> getBooks() {
+		try {
+			log.debug("Enter | getBooks");
+			session = DbConfig.sessionBulder();
+			Query query = session.createQuery("from Book");
+			List<Book> list = query.list();
+			log.debug("Info | getBooks list.size() : " + list.size());
+			return list;
+		} catch (Exception e) {
+			return null;
+		} finally {
+			log.debug("Left | getBooks");
+			session.close();
+		}
+	}
+
 }

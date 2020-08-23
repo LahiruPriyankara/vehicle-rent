@@ -2,7 +2,18 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@page import="com.lhu.vehicle_rent_backend.DTO.User"%>
 
+<%
+	User loggedUser = session.getAttribute("userInfo") != null ? (User) (session.getAttribute("userInfo"))
+			: new User();
+	
+	boolean isloggedUser =  session.getAttribute("isloggedUser")!=null?(boolean)session.getAttribute("isloggedUser"):false;
+	boolean hasValidationError =  session.getAttribute("hasValidationError")!=null?(boolean)session.getAttribute("hasValidationError"):false;
+	String onAction =  session.getAttribute("onAction")!=null?(String)session.getAttribute("onAction"):"";
+	System.out.println("xxxx   "+loggedUser.toString());
+	System.out.println("llll");
+%>
 
 <spring:url var="bootsrap" value="/resources/bootsrap" />
 <spring:url var="css" value="/resources/css" />
@@ -13,6 +24,13 @@
 <html lang="en">
 
 <head>
+<%-- 
+<script>
+	window.onAction = '<%=onAction%>';
+	window.hasValidationError = '<%=hasValidationError%>';
+	console.log("01. "+window.onAction+" | "+window.hasValidationError);	
+</script>
+ --%>
 <!-- Theme Made By www.w3schools.com -->
 <title>Bootstrap Theme Company Page</title>
 <meta charset="utf-8">
@@ -45,14 +63,15 @@
 	</div>
 
 
-	<button type="button" data-toggle="modal" data-target="#bookVehicle"
+	<button type="button" data-toggle="modal" data-target="#bookVehicle" onclick="model('','closeEditUserModal','closeUserModal','closeVehicleModal','','')"
 		id="bookModelShowingBtn" hidden>Open Modal</button>
 
 	<!-- Modal -->
+	<%@include file="modal/editUser.jsp"%>
 	<%@include file="modal/bookVehicle.jsp"%>
-	<%@include file="modal/modal.jsp"%>
-	<%@include file="modal/newVehicleModal.jsp"%>
-	<br>
+	<%@include file="modal/singInSingUp.jsp"%>
+	<%@include file="modal/vehicleModal.jsp"%>
+	<br>	
 	<div class="data">
 		<!-- Container (Main Section) -->
 		<div id="data" class="container-fluid">

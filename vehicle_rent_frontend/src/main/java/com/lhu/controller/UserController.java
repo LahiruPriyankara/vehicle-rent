@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
@@ -30,84 +31,184 @@ public class UserController {
 	@Autowired
 	private UserMgnBl userMgnBl;
 
-	@RequestMapping(value = "singIn")
-	public ModelAndView singIn(@Valid @ModelAttribute("user") User user, BindingResult results, Model model,
-			HttpServletRequest request) {
-		log.debug("Enter | singIn");
-		ModelAndView mv = new ModelAndView("index");
-		User loggedUser = userMgnBl.getUser(user.getEmail(), user.getPassword());
-		if (loggedUser != null) {
-			log.debug("Logging Success...");
-		} else {
-			log.debug("Logging Fail...");
-		}
-		user = new User();
+	User loggedUser = new User();
+	Vehicle vehicel = new Vehicle();
+	List<String> statuslist = new ArrayList();
+	List<String> rTypelist = new ArrayList();
+	List<String> vTypelist = new ArrayList();
 
-		log.debug("Left | singIn");
-		return mv;
+	@RequestMapping(value = "singIn")
+	public String singIn(@Valid @ModelAttribute("user") User user, BindingResult results, Model model,
+			HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.setAttribute("onAction", "singIn");
+		session.setAttribute("hasValidationError", false);
+		try {
+			log.debug("Enter | singIn");
+			ModelAndView mv = new ModelAndView("index");
+			User loggedUser = userMgnBl.getUser(user.getEmail(), user.getPassword());
+			if (loggedUser != null) {
+
+				loggedUser.setPassword("");
+				loggedUser.setConfirmPassword("");
+				loggedUser.setConfirmPassword2("");
+				// System.out.println(""+loggedUser.to_String());
+				HomeController.loggedUser = loggedUser;
+				session.setAttribute("userInfo", loggedUser);
+				session.setAttribute("isloggedUser", true);
+				log.debug("Logging Success...");
+			} else {
+				log.debug("Logging Fail...");
+				session.setAttribute("hasValidationError", true);
+			}
+			log.debug("Left | singIn");
+			return "redirect:/main/home";
+		} catch (Exception e) {
+			log.debug("Exception : " + e);
+			session.setAttribute("hasValidationError", true);
+			return "index";
+		}
 	}
 
 	@RequestMapping(value = "singUp")
-	public ModelAndView singUp(@Valid @ModelAttribute("user") User user, BindingResult results, Model model,
+	public String singUp(@Valid @ModelAttribute("user") User user, BindingResult results, Model model,
 			HttpServletRequest request) {
 		log.debug("Enter | singUp");
-		ModelAndView mv = new ModelAndView("index");
-
-		if (userMgnBl.getUser(user.getEmail(), null) != null) {
-			log.debug("Info | There are some validation errors");
-			results.rejectValue("email", null, "This email is already available,try with new one!");
-		} else {
-			if (!user.getPassword().toLowerCase().equalsIgnoreCase(user.getConfirmPassword().toLowerCase())) {
-				results.rejectValue("confirmPassword", null, "Not match with givenn password!");
-			}
-			new ImageValidate().validate(user, results);
-			if (!results.hasErrors()) {
-				ImageUpload.uploadFile(request, user.getFile(), user.getImage(), 0);
-				userMgnBl.addUser(user);
-				user = new User();
-			} else {
+		try {
+			if (userMgnBl.getUser(user.getEmail(), null) != null) {
 				log.debug("Info | There are some validation errors");
-				user.setConfirmPassword("");
+				results.rejectValue("email", null, "This email is already taken,try with new one!");
+			} else {
+				if (!user.getPassword().toLowerCase().equalsIgnoreCase(user.getConfirmPassword().toLowerCase())) {
+					results.rejectValue("confirmPassword", null, "Not match with givenn password!");
+				}
+				new ImageValidate().validate(user, results);
+				if (!results.hasErrors()) {
+					ImageUpload.uploadFile(request, user.getFile(), user.getImage(), 0);
+					userMgnBl.addUser(user);
+					log.debug("Info | Sucessfully added");
+				} else {
+					log.debug("Info | There are some validation errors");
+				}
 			}
+
+			log.debug("Left | singUp");
+			return "redirect:/User/singIn";
+		} catch (Exception e) {
+			log.debug("Exception : " + e);
+			return "index";
 		}
-
-		log.debug("Left | singUp");
-		return mv;
 	}
 
-	@ModelAttribute("user")
-	public User modelUser() {
-		return new User();
+	@RequestMapping(value = "singOff/{id}")
+	public String singOff(HttpServletRequest request) {
+		log.debug("Enter | singOff");
+		try {
+			// ModelAndView mv = new ModelAndView("index");
+			HttpSession session = request.getSession();
+			log.debug("Info | loggedUser : " + loggedUser);
+			if (loggedUser != null) {
+				session.removeAttribute("userInfo");
+				session.removeAttribute("isloggedUser");
+				session.removeAttribute("hasValidationError");
+				session.removeAttribute("onAction");
+
+				HomeController.loggedUser = new User();
+				HomeController.vehicel = new Vehicle();
+				HomeController.statuslist = new ArrayList();
+				HomeController.rTypelist = new ArrayList();
+				HomeController.vTypelist = new ArrayList();
+				log.debug("SingOff Success...");
+			} else {
+				log.debug("SingOff Fail...");
+			}
+			log.debug("Left | singOff");
+			return "redirect:/User/singIn";
+		} catch (Exception e) {
+			log.debug("Exception : " + e);
+			return "index";
+		}
 	}
 
-	@ModelAttribute("vehicle")
-	public Vehicle modelVehicle() {
-		return new Vehicle();
+	@RequestMapping(value = "edit/{id}")
+	public String edit(@Valid @ModelAttribute("user") User user, BindingResult results, Model model,
+			HttpServletRequest request) {
+		log.debug("Enter | edit");
+		try {
+			boolean isDelete = ((String) request.getParameter("actionType")).equalsIgnoreCase("delete") ? true : false;
+			User oldUser = userMgnBl.getUser(user.getEmail(), null);
+			if (oldUser != null) {
+				boolean hasError = false;
+				if (!oldUser.getPassword().equalsIgnoreCase(user.getPassword())) {
+					results.rejectValue("confirmPassword", null, "Wrong password!");
+					hasError = true;
+				}
+				if (!oldUser.getConfirmPassword().equalsIgnoreCase(user.getConfirmPassword2())) {
+					results.rejectValue("confirmPassword", null, "New passwords are not match!");
+					hasError = true;
+				}
+				if (!oldUser.getPassword().equalsIgnoreCase(user.getConfirmPassword())) {
+					results.rejectValue("confirmPassword", null, "New password is not match with old!");
+					hasError = true;
+				}
+
+				if (oldUser.getTp().equalsIgnoreCase(user.getTp())
+						&& oldUser.getImage().equalsIgnoreCase(user.getImage())
+						&& oldUser.getName().equalsIgnoreCase(user.getName())
+						&& oldUser.getPassword().equalsIgnoreCase(user.getConfirmPassword())) {
+					results.rejectValue("notModify", null, "Please change a value!");
+					hasError = true;
+				}
+				if (hasError) {
+					throw new Exception("Validation Error");
+				}
+				user.setPassword(user.getConfirmPassword());
+				new ImageValidate().validate(user, results);
+				if (!results.hasErrors()) {
+					ImageUpload.uploadFile(request, user.getFile(), user.getImage(), 0);
+					if (isDelete) {
+						userMgnBl.deleteUser(user);
+					} else {
+						userMgnBl.updateUser(user);
+					}
+					log.debug("Info | Sucessfully added");
+				} else {
+					log.debug("Info | There are some validation errors");
+				}
+
+			} else {
+				throw new Exception("Data Fetching Error");
+			}
+
+			log.debug("Left | singOff");
+			return "redirect:/User/singIn";
+		} catch (Exception e) {
+			log.debug("Exception : " + e);
+			return "index";
+		}
 	}
 
-	@ModelAttribute("statusList")
-	public List statusList() {
-		List<String> list = new ArrayList();
-		list.add("ACTIVE");
-		list.add("INACTIVE");
-		return list;
-	}
-
-	@ModelAttribute("roleList")
-	public List roleList() {
-		List<String> list = new ArrayList();
-		list.add("ADMIN");
-		list.add("SUPPLIER");
-		list.add("CUSTOMER");
-		return list;
-	}
-	@ModelAttribute("vehicleTypeList")
-	public List vehicleTypeList() {
-		List<String> list = new ArrayList();
-		list.add("BUS");
-		list.add("VAN");
-		list.add("CAR");
-		list.add("THREE WEELER");
-		return list;
-	}
+	/*
+	 * @ModelAttribute("user") public User modelUser(HttpServletRequest request)
+	 * { HttpSession session = request.getSession(); boolean isLog =
+	 * session.getAttribute("loggedUser") != null ? (boolean)
+	 * session.getAttribute("loggedUser") : false; if (isLog) { loggedUser =
+	 * session.getAttribute("userInfo") != null ? (User)
+	 * (session.getAttribute("userInfo")) : new User(); } return loggedUser; }
+	 * 
+	 * @ModelAttribute("vehicle") public Vehicle modelVehicle() { return
+	 * vehicel; }
+	 * 
+	 * @ModelAttribute("statusList") public List statusList() { statuslist = new
+	 * ArrayList(); statuslist.add("ACTIVE"); statuslist.add("INACTIVE"); return
+	 * statuslist; }
+	 * 
+	 * @ModelAttribute("roleList") public List roleList() { List<String>
+	 * rTypelist = new ArrayList(); rTypelist.add("ADMIN");
+	 * rTypelist.add("SUPPLIER"); rTypelist.add("CUSTOMER"); return rTypelist; }
+	 * 
+	 * @ModelAttribute("vehicleTypeList") public List vehicleTypeList() {
+	 * vTypelist = new ArrayList(); vTypelist.add("BUS"); vTypelist.add("VAN");
+	 * vTypelist.add("CAR"); vTypelist.add("THREE WEELER"); return vTypelist; }
+	 */
 }

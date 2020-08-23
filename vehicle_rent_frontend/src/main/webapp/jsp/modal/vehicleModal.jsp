@@ -13,7 +13,7 @@
 					</div>
 					<div class="col-md-2">
 						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close" id="closeAddnewModal">
+							aria-label="Close" id="closeVehicleModal">
 							<span aria-hidden="true" style="color: #ffffff"><b>&times;</b></span>
 						</button>
 					</div>
@@ -46,6 +46,21 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="control-label col-md-2">Number</label>
+						<div class="col-md-10 validate">
+							<sf:input type="text" path="vNumber" class="form-control"
+								placeholder="ABC-1025" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-md-2">Conditions</label>
+						<div class="col-md-10 validate">
+							<sf:input type="text" path="conditions" class="form-control"
+								placeholder="AC/TV" />
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="control-label col-md-2">Per KM</label>
 						<div class="col-md-10 validate">
 							<sf:input type="number" path="perKm" class="form-control"
@@ -60,21 +75,7 @@
 								placeholder="500" />
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="control-label col-md-2">Number</label>
-						<div class="col-md-10 validate">
-							<sf:input type="text" path="vNumber" class="form-control"
-								placeholder="ABC-1025" />
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="control-label col-md-2">conditions</label>
-						<div class="col-md-10 validate">
-							<sf:input type="text" path="conditions" class="form-control"
-								placeholder="AC/TV" />
-						</div>
-					</div>
+					
 					<div class="form-group">
 						<label class="control-label col-md-2">Rate</label>
 						<div class="col-md-10 validate">
