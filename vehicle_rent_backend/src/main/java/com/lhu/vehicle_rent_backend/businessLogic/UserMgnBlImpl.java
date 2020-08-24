@@ -74,9 +74,9 @@ public class UserMgnBlImpl implements UserMgnBl {
 	}
 
 	@Override
-	public List<Vehicle> getVehicles() {
+	public List<Vehicle> getVehicles(User user) {
 		log.debug("Enter | getVehicles");
-		return vehicleMngImpl.getVehicles();
+		return vehicleMngImpl.getVehicles(user);
 	}
 
 	@Override
@@ -89,12 +89,6 @@ public class UserMgnBlImpl implements UserMgnBl {
 	public boolean deleteVehicle(Vehicle vehicle) {
 		log.debug("Enter | deleteVehicle");
 		return vehicleMngImpl.modifyVehicle(vehicle, 3);
-	}
-
-	@Override
-	public List<Vehicle> getVehiclesByUser(User user) {
-		log.debug("Enter | getVehiclesById");
-		return vehicleMngImpl.getVehiclesByUser(user);
 	}
 
 	// ---------------------------------------- BOOKING
@@ -124,15 +118,9 @@ public class UserMgnBlImpl implements UserMgnBl {
 	}
 
 	@Override
-	public List<Book> getBooks() {
+	public List<Book> getBooks(User user) {
 		log.debug("Enter | getBooks");
-		return bookMngImpl.getBooks();
-	}
-
-	@Override
-	public List<Book> getBooksByUser(User user) {
-		log.debug("Enter | getBooksById");
-		return bookMngImpl.getBooksByUser(user);
+		return bookMngImpl.getBooks(user);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.lhu.vehicle_rent_backend.DAOImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.InitialContext;
@@ -75,34 +76,23 @@ public class VehicleMngImpl implements VehicleMng {
 	}
 
 	@Override
-	public List<Vehicle> getVehicles() {
+	public List<Vehicle> getVehicles(User user) {
 		try {
 			log.debug("Enter | getVehicles");
 			session = DbConfig.sessionBulder();
-			Query query = session.createQuery("from Vehicle");
+			Query query = null;
+			if(user == null){
+				query = session.createQuery("from Vehicle");
+			}else{
+				query = session.createQuery("from Vehicle where user.id ="+user.getId());
+			}
 			List<Vehicle> list = query.list();
 			log.debug("Info | getVehicles list.size() : " + list.size());
 			return list;
 		} catch (Exception e) {
-			return null;
+			return new ArrayList<Vehicle>();
 		} finally {
 			log.debug("Left | getVehicles");
-			session.close();
-		}
-	}
-	@Override
-	public List<Vehicle> getVehiclesByUser(User user) {
-		try {
-			log.debug("Enter | getVehiclesById");
-			session = DbConfig.sessionBulder();
-			Query query = session.createQuery("from Vehicle where user.id ="+user.getId());
-			List<Vehicle> list = query.list();
-			log.debug("Info | getVehicles list.size() : " + list.size());
-			return list;
-		} catch (Exception e) {
-			return null;
-		} finally {
-			log.debug("Left | getVehiclesById");
 			session.close();
 		}
 	}

@@ -219,11 +219,11 @@ function displaySuccess(data, type) {
 
 }
 
-function getUserProfileData(){
+function getUserProfileData(jUrl){
 	$.ajax({
 		type : "POST",
 		contentType : "application/json",
-		url : "/vehicle_rent_backend/main/getUserProfileData",
+		url : jUrl,
 		data : JSON.stringify(data),
 		dataType : 'html',
 		timeout : 100000,

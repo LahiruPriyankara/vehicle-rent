@@ -18,6 +18,7 @@
 			<li><a href="#about">ABOUT</a></li>
 			<li><a href="#services">SERVICES</a></li>
 			<li><a href="#contact">CONTACT</a></li>
+			<li><a href="#" onclick="getUserProfileData('/vehicle_rent_backend/main/getAllSysDataForAdmin')">SUMMARY</a></li>
 			<span>&nbsp;&nbsp;&nbsp;</span>
 			<li>
 				<button id="control" type="button" class="btn btn-xs" data-toggle="modal" data-target="#vehicleModal" onclick="model('closeBookModal','closeEditUserModal','closeUserModal','','','')">
@@ -38,7 +39,7 @@
                  VIEW VEHICLE
 		      </button>
 		      &nbsp;&nbsp;&nbsp;		  
-			  <button type="button" style="margin-top:7px" onclick="getUserProfileData()">
+			  <button type="button" style="margin-top:7px" onclick="getUserProfileData('/vehicle_rent_backend/main/getUserProfileData')">
                  <img src="${images}/userImage/<%= loggedUser.getImage() %>.jpg" alt=""
 						style="width: 35px; height: 30px;">&nbsp;&nbsp;&nbsp;	<%= loggedUser.getName() %>
 		      </button>

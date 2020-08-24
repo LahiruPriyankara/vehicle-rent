@@ -40,7 +40,9 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView("index");
 		try {
 			log.debug("Enter | home");
-			mv.addObject("vehicles", userMgnBl.getVehicles());
+			List<Vehicle> vList = userMgnBl.getVehicles(null);
+			System.out.println("main.home .......................... "+vList.size());
+			mv.addObject("vehicles", vList);
 		} catch (Exception e) {
 			log.debug("Exception : " + e);
 		}
@@ -69,7 +71,7 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView("homePageContext/availableVehicle");
 		try {
 			log.debug("Enter | home");
-			mv.addObject("vehicles", userMgnBl.getVehicles());
+			mv.addObject("vehicles", userMgnBl.getVehicles(null));
 
 		} catch (Exception e) {
 			log.debug("Exception : " + e);
@@ -86,10 +88,30 @@ public class HomeController {
 			HttpSession session = request.getSession();
 			User user = session.getAttribute("userInfo") != null ? (User) (session.getAttribute("userInfo")): new User();
 			System.out.println("user : "+user.toString());
-			List<Vehicle> vList = userMgnBl.getVehiclesByUser(user);
-			List<Book> bList = userMgnBl.getBooksByUser(user);
+			List<Vehicle> vList = userMgnBl.getVehicles(user);
+			List<Book> bList = userMgnBl.getBooks(user);
 			System.out.println("vList  : "+vList.size()+"  | bList  : "+bList.size());
-			for(Book b: bList){System.out.println("XX  : "+b.toString());}
+			mv.addObject("vehicles", vList);
+			mv.addObject("books", bList);
+
+		} catch (Exception e) {
+			log.debug("Exception : " + e);
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value = "getAllSysDataForAdmin")
+	public ModelAndView getAllSysDataForAdmin(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("user/userBookingAndUploadedVehicle");
+		try {
+			log.debug("Enter | home");
+			//int uID = Integer.parseInt(id);
+			HttpSession session = request.getSession();
+			User user = session.getAttribute("userInfo") != null ? (User) (session.getAttribute("userInfo")): new User();
+			System.out.println("user : "+user.toString());
+			List<Vehicle> vList = userMgnBl.getVehicles(null);
+			List<Book> bList = userMgnBl.getBooks(null);
+			System.out.println("vList  : "+vList.size()+"  | bList  : "+bList.size());
 			mv.addObject("vehicles", vList);
 			mv.addObject("books", bList);
 

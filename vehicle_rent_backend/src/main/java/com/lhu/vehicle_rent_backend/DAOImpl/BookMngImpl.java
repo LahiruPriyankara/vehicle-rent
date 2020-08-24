@@ -1,6 +1,7 @@
 package com.lhu.vehicle_rent_backend.DAOImpl;
 // Generated Aug 16, 2020 8:38:22 AM by Hibernate Tools 4.3.1.Final
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lhu.vehicle_rent_backend.DAO.BookMng;
 import com.lhu.vehicle_rent_backend.DTO.Book;
 import com.lhu.vehicle_rent_backend.DTO.User;
+import com.lhu.vehicle_rent_backend.DTO.Vehicle;
 import com.lhu.vehicle_rent_backend.config.DbConfig;
 
 /**
@@ -77,35 +79,23 @@ public class BookMngImpl implements BookMng {
 	}
 
 	@Override
-	public List<Book> getBooks() {
+	public List<Book> getBooks(User user) {
 		try {
 			log.debug("Enter | getBooks");
-			session = DbConfig.sessionBulder();
-			Query query = session.createQuery("from Book");
+			session = DbConfig.sessionBulder();			
+			Query query = null;
+			if(user == null){
+				query = session.createQuery("from Book");
+			}else{
+				query = session.createQuery("from Book  where user.id ="+user.getId());
+			}
 			List<Book> list = query.list();
 			log.debug("Info | getBooks list.size() : " + list.size());
 			return list;
 		} catch (Exception e) {
-			return null;
+			return new ArrayList<Book>();
 		} finally {
 			log.debug("Left | getBooks");
-			session.close();
-		}
-	}
-	
-	@Override
-	public List<Book> getBooksByUser(User user) {
-		try {
-			log.debug("Enter | getBooksById");
-			session = DbConfig.sessionBulder();
-			Query query = session.createQuery("from Book  where user.id ="+user.getId());
-			List<Book> list = query.list();
-			log.debug("Info | getBooks list.size() : " + list.size());
-			return list;
-		} catch (Exception e) {
-			return null;
-		} finally {
-			log.debug("Left | getBooksById");
 			session.close();
 		}
 	}

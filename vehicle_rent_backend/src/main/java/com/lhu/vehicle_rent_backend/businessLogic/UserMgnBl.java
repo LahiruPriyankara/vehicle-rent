@@ -26,9 +26,7 @@ public interface UserMgnBl {
 
 	public Vehicle getVehicle(int id);
 
-	public List<Vehicle> getVehicles();
-
-	public List<Vehicle> getVehiclesByUser(User user);
+	public List<Vehicle> getVehicles(User user);
 
 	public boolean addBook(Book book);
 
@@ -38,7 +36,6 @@ public interface UserMgnBl {
 
 	public Book getBook(int id);
 
-	public List<Book> getBooks();
+	public List<Book> getBooks(User user);
 
-	public List<Book> getBooksByUser(User user);
 }

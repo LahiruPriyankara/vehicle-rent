@@ -10,7 +10,5 @@ public interface BookMng {
 
 	public Book getBook(int id);
 
-	public List<Book> getBooks();
-	
-	public List<Book> getBooksByUser(User user);
+	public List<Book> getBooks(User user);
 }

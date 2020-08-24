@@ -10,7 +10,7 @@ public interface VehicleMng {
 
 	public Vehicle getVehicle(int id);
 
-	public List<Vehicle> getVehicles();
+	public List<Vehicle> getVehicles(User user);
 
-	public List<Vehicle> getVehiclesByUser(User user);
+	//public List<Vehicle> getVehiclesByUser(User user);
 }
