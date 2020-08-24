@@ -61,9 +61,9 @@
 				<th>Rate</th>
 				<th></th>
 			</tr>
-			<tr>
-				<c:forEach items="${vehicles}" var="vehicle">
 
+			<c:forEach items="${vehicles}" var="vehicle">
+				<tr>
 					<td><img src="${images}/vehicleImage/${vehicle.image}.jpg"
 						alt="" style="width: 30px; height: 30px;"></td>
 
@@ -79,8 +79,9 @@
 							onclick="model('closeBookModal','','closeUserModal','closeVehicleModal','2','${vehicle.id}')"
 							style="width: 100px; background-color: green">Edit</button>
 					</td>
-				</c:forEach>
-			</tr>
+				</tr>
+			</c:forEach>
+
 		</table>
 	</div>
 	<div class="col-md-1"></div>

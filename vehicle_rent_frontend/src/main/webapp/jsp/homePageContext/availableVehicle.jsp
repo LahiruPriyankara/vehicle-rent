@@ -9,10 +9,15 @@
 		availabe in every where.Select vehicles for your trip.
 	</p>
 </div>
-<div class="row slideanim">
+<%
+	int count = 0;
+%>
 
-	<c:forEach items="${vehicles}" var="vehicle">
-
+<c:forEach items="${vehicles}" var="vehicle" varStatus="theCount">
+	<%if (count == 0 || count % 4 == 0) { %>
+	<div class="row slideanim">
+	<% } %>
+		<div id="${theCount.count}"></div>
 		<div class="col-sm-3 col-xs-12" id="vehicleDiv"
 			onclick="vehicleInfoForBooking(${vehicle.id})">
 			<div class="panel panel-default text-center">
@@ -22,42 +27,42 @@
 				</div> --%>
 				<div>
 					<img src="${images}/vehicleImage/${vehicle.image}.jpg" alt=""
-						style="width: 100%; height: 100%; border-radius: 0%;">
+						style="width: 100%; height: 300px; border-radius: 0%;">
 				</div>
 
-				<div class="panel-footer">
+				<div class="panel-footer" style="height: 160px;">
 					<div class="row">
 						<div class="col-md-3" style="background-color: #333333">
-							<h5>Vehicle</h5>
+							<span style="color: #ffffff; font-size: 10px">Vehicle</span>
 						</div>
 						<div class="col-md-3" style="background-color: #333333">
-							<h5>${vehicle.name}</h5>
+							<span style="color: #ffffff; font-size: 10px">${vehicle.name}</span>
 						</div>
 						<div class="col-md-3" style="background-color: #1a1a1a">
-							<h5>PerDay</h5>
+							<span style="color: #ffffff; font-size: 10px">PerDay</span>
 						</div>
 						<div class="col-md-3" style="background-color: #1a1a1a">
-							<h5>${vehicle.perDay}</h5>
+							<span style="color: #ffffff; font-size: 10px">${vehicle.perDay}</span>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-3" style="background-color: #333333">
-							<h5>Number</h5>
+							<span style="color: #ffffff; font-size: 10px">Number</span>
 						</div>
 						<div class="col-md-3" style="background-color: #333333">
-							<h5>${vehicle.vNumber}</h5>
+							<span style="color: #ffffff; font-size: 10px">${vehicle.vNumber}</span>
 						</div>
 						<div class="col-md-3" style="background-color: #1a1a1a">
-							<h5>Per1KM</h5>
+							<span style="color: #ffffff; font-size: 10px">Per1KM</span>
 						</div>
 						<div class="col-md-3" style="background-color: #1a1a1a">
-							<h5>${vehicle.perKm}</h5>
+							<span style="color: #ffffff; font-size: 10px">${vehicle.perKm}</span>
 						</div>
 					</div>
 					<div class="row">
-						<span style="font-size: 12px; color: #ffffff">Condition
+						<span style="font-size: 10px; color: #ffffff">Condition
 							&nbsp;&nbsp;:&nbsp;&nbsp;</span><span
-							style="font-size: 12px; color: #ffffff">${vehicle.conditions}</span>
+							style="font-size: 10px; color: #ffffff">${vehicle.conditions}</span>
 						<hr>
 					</div>
 
@@ -75,7 +80,8 @@
 				</div>
 			</div>
 		</div>
-
-	</c:forEach>
-
-</div>
+		<% count += 1;
+		if (count % 4 == 0) {%>
+	</div>
+		<%}%>
+</c:forEach>

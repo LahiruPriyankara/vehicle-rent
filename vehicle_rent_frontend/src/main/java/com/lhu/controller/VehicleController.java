@@ -105,8 +105,8 @@ public class VehicleController {
 			}
 			System.out.println("isSuccess  " + isSuccess);
 			log.debug("Left | update");
-			//return "redirect:/main/home";
-			return "index";
+			return "redirect:/main/home";
+			//return "index";
 		} catch (Exception e) {
 			log.debug("Exception : " + e);
 			return "index";

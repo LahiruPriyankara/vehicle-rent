@@ -202,8 +202,8 @@ public class UserController {
 			}
 
 			log.debug("Left | edit");
-			//return "redirect:/User/singIn";
-			return "index";
+			return "redirect:/User/singIn";
+			//return "index";
 		} catch (Exception e) {
 			log.debug("Exception : " + e);
 			return "index";
