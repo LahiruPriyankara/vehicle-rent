@@ -131,39 +131,60 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "edit")
-	public String edit(@Valid @ModelAttribute("user") User user, BindingResult results, Model model,
-			HttpServletRequest request) {
+	public String edit(@Valid @ModelAttribute("user") User user, BindingResult results, Model model,HttpServletRequest request) {
 		log.debug("Enter | edit");
+		boolean isSuccess = false;
+		HttpSession session = request.getSession();
 		try {
 			boolean isDelete = ((String) request.getParameter("actionType")).equalsIgnoreCase("delete") ? true : false;
 			User oldUser = userMgnBl.getUser(user.getEmail(), null);
 			if (oldUser != null) {
-				boolean hasError = false;
+				/*boolean hasError = false;
 				if (!oldUser.getPassword().equalsIgnoreCase(user.getPassword())) {
 					results.rejectValue("confirmPassword", null, "Wrong password!");
 					hasError = true;
 				}
-				if (!oldUser.getConfirmPassword().equalsIgnoreCase(user.getConfirmPassword2())) {
-					results.rejectValue("confirmPassword", null, "New passwords are not match!");
-					hasError = true;
+				if (!user.getConfirmPassword().equalsIgnoreCase("") || !user.getConfirmPassword2().equalsIgnoreCase("")) {
+					if (user.getConfirmPassword().equalsIgnoreCase(user.getConfirmPassword2())) {
+						if (!oldUser.getPassword().equalsIgnoreCase(user.getConfirmPassword()) || !oldUser.getConfirmPassword().equalsIgnoreCase(user.getConfirmPassword2())) {
+							results.rejectValue("confirmPassword", null, "New passwords are not match!");
+							hasError = true;
+						}
+					}else{
+						results.rejectValue("confirmPassword", null, "New password are not match!");
+						hasError = true;
+					}
+					
+				}else{
+					if (oldUser.getTp().equalsIgnoreCase(user.getTp())
+							&& oldUser.getImage().equalsIgnoreCase(user.getImage())
+							&& oldUser.getName().equalsIgnoreCase(user.getName())
+							&& oldUser.getPassword().equalsIgnoreCase(user.getConfirmPassword())) {
+						results.rejectValue("notModify", null, "Please change a value!");
+						hasError = true;
+					}
 				}
-				if (!oldUser.getPassword().equalsIgnoreCase(user.getConfirmPassword())) {
-					results.rejectValue("confirmPassword", null, "New password is not match with old!");
-					hasError = true;
-				}
-
-				if (oldUser.getTp().equalsIgnoreCase(user.getTp())
-						&& oldUser.getImage().equalsIgnoreCase(user.getImage())
-						&& oldUser.getName().equalsIgnoreCase(user.getName())
-						&& oldUser.getPassword().equalsIgnoreCase(user.getConfirmPassword())) {
-					results.rejectValue("notModify", null, "Please change a value!");
-					hasError = true;
-				}
+				
 				if (hasError) {
 					throw new Exception("Validation Error");
 				}
-				user.setPassword(user.getConfirmPassword());
-				new ImageValidate().validate(user, results);
+				*/
+				
+				System.out.println("Updation Obj  " + user.toString());
+				if (isDelete) {
+					/*if(!user.getPassword().equalsIgnoreCase(user.getConfirmPassword())){
+						throw new Exception("Wrong Password.");
+					}*/
+					isSuccess = userMgnBl.deleteUser(user);
+				}else{
+					user.setPassword(user.getConfirmPassword());
+					isSuccess = userMgnBl.updateUser(user);
+				}
+				User loggedUser = userMgnBl.getUser(user.getEmail(), user.getPassword())!=null?userMgnBl.getUser(user.getEmail(), user.getPassword()):new User();
+				session.setAttribute("userInfo", loggedUser);
+				System.out.println("isSuccess  " + isSuccess);
+				
+				/*new ImageValidate().validate(user, results);
 				if (!results.hasErrors()) {
 					ImageUpload.uploadFile(request, user.getFile(), user.getImage(), 0);
 					if (isDelete) {
@@ -174,14 +195,15 @@ public class UserController {
 					log.debug("Info | Sucessfully added");
 				} else {
 					log.debug("Info | There are some validation errors");
-				}
+				}*/
 
 			} else {
 				throw new Exception("Data Fetching Error");
 			}
 
-			log.debug("Left | singOff");
-			return "redirect:/User/singIn";
+			log.debug("Left | edit");
+			//return "redirect:/User/singIn";
+			return "index";
 		} catch (Exception e) {
 			log.debug("Exception : " + e);
 			return "index";

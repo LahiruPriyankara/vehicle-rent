@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 //import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class Vehicle implements java.io.Serializable {
 	//@JsonIgnore
 	private User user = new User();
 	
-	@OneToMany(mappedBy = "vehicle")
+	@OneToMany(mappedBy = "vehicle",cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Book> book = new ArrayList<Book>();
 	
