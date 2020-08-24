@@ -98,7 +98,7 @@ public class BookMngImpl implements BookMng {
 		try {
 			log.debug("Enter | getBooksById");
 			session = DbConfig.sessionBulder();
-			Query query = session.createQuery("from Book where user =" + user);
+			Query query = session.createQuery("from Book  where user.id ="+user.getId());
 			List<Book> list = query.list();
 			log.debug("Info | getBooks list.size() : " + list.size());
 			return list;

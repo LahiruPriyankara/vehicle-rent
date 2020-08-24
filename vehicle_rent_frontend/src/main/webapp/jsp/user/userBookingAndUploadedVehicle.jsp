@@ -21,7 +21,7 @@
 				<th>Type</th>
 				<th>TP</th>
 				<th>Status</th>
-				<th>Edit</th>
+				<th></th>
 			</tr>
 			<tr>
 				<td><img
@@ -59,14 +59,13 @@
 				<th>PerKm</th>
 				<th>PerDay</th>
 				<th>Rate</th>
-				<th>Edit</th>
+				<th></th>
 			</tr>
 			<tr>
 				<c:forEach items="${vehicles}" var="vehicle">
 
-					<td>
-						<img src="${images}/vehicleImage/${vehicle.image}.jpg" alt="" style="width: 30px; height: 30px;">
-					</td>
+					<td><img src="${images}/vehicleImage/${vehicle.image}.jpg"
+						alt="" style="width: 30px; height: 30px;"></td>
 
 					<td>${vehicle.name}</td>
 					<td>${vehicle.vType}</td>
@@ -98,21 +97,22 @@
 				<th>PickUp</th>
 				<th>PickOff</th>
 				<th>Date</th>
-				<th>Edit</th>
+				<th></th>
 
 			</tr>
-			<tr><c:forEach items="${books}" var="book">
-				<td>${book.vehicle.name}</td>
-				<td>${book.pickUpPoint}</td>
-				<td>${book.pickOffPoint}</td>
-				<td>${book.datetime}</td>
-				<td style="text-align: right;">
-					<button class="btn" data-toggle="modal" data-target="#editUser"
-						onclick="model('closeBookModal','','closeUserModal','closeVehicleModal','3','${book.id}')"
-						style="width: 100px; background-color: green">Edit</button>
-				</td>
-				</c:forEach>
-			</tr>
+			<c:forEach items="${books}" var="book">
+				<tr>
+					<td>${book.vehicle.name}</td>
+					<td>${book.pickUpPoint}</td>
+					<td>${book.pickOffPoint}</td>
+					<td>${book.datetime}</td>
+					<td style="text-align: right;">
+						<button class="btn" data-toggle="modal" data-target="#editUser"
+							onclick="model('closeBookModal','','closeUserModal','closeVehicleModal','3','${book.id}')"
+							style="width: 100px; background-color: green">Edit</button>
+					</td>
+				</tr>
+			</c:forEach>
 		</table>
 	</div>
 	<div class="col-md-1"></div>

@@ -185,7 +185,7 @@ function displaySuccess(data, type) {
 	console.log("data.id  : "+data.id+", type : "+type);
 	if (type === "") {
 		$('#vName').val(data.name);
-		$('#vId').val(data.id);
+		$('#vId').val(data.id);		
 		$('#vNumber').val(data.vNumber);
 		$('#condition').val(data.conditions);
 		$('#perKm').val(data.perKm);
@@ -196,6 +196,7 @@ function displaySuccess(data, type) {
 
 	} else if (type === "2") {
 		$('#vIdModifyVIew').val(data.id);
+		$('#vImageModifyVIew').val(data.image);
 		$('#vNameModifyVIew').val(data.name);
 		//$('#vcListModifyVIew').val(data.vType);
 		$('#vNumberModifyVIew').val(data.vNumber);
@@ -205,7 +206,7 @@ function displaySuccess(data, type) {
 		$('#vRateModifyVIew').val(data.rate);
 		
 	} else if (type === "3") {
-		//$('#bIdModifyVIew').val(data.id);
+		$('#bIdModifyVIew').val(data.id);
 		$('#bStatusModifyVIew').val(data.status);
 		$('#bpickUpPointModifyVIew').val(data.pickUpPoint);		
 		$('#bpickOffPointModifyVIew').val(data.pickOffPoint);

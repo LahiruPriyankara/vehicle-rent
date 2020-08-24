@@ -22,7 +22,7 @@
 				</div> --%>
 				<div>
 					<img src="${images}/vehicleImage/${vehicle.image}.jpg" alt=""
-						style="width: 360px; height: 300px; border-radius: 0%;">
+						style="width: 100%; height: 100%; border-radius: 0%;">
 				</div>
 
 				<div class="panel-footer">

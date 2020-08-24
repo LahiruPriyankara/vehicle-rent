@@ -77,7 +77,7 @@ public class HomeController {
 		return mv;
 	}
 
-	@RequestMapping(value = "getUserProfileData/{id}")
+	@RequestMapping(value = "getUserProfileData")
 	public ModelAndView getUserProfileData(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("user/userBookingAndUploadedVehicle");
 		try {
@@ -89,6 +89,7 @@ public class HomeController {
 			List<Vehicle> vList = userMgnBl.getVehiclesByUser(user);
 			List<Book> bList = userMgnBl.getBooksByUser(user);
 			System.out.println("vList  : "+vList.size()+"  | bList  : "+bList.size());
+			for(Book b: bList){System.out.println("XX  : "+b.toString());}
 			mv.addObject("vehicles", vList);
 			mv.addObject("books", bList);
 

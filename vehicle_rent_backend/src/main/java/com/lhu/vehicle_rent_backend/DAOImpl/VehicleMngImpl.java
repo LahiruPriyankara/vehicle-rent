@@ -95,7 +95,7 @@ public class VehicleMngImpl implements VehicleMng {
 		try {
 			log.debug("Enter | getVehiclesById");
 			session = DbConfig.sessionBulder();
-			Query query = session.createQuery("from Vehicle where user ="+user);
+			Query query = session.createQuery("from Vehicle where user.id ="+user.getId());
 			List<Vehicle> list = query.list();
 			log.debug("Info | getVehicles list.size() : " + list.size());
 			return list;
