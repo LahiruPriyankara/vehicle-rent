@@ -45,23 +45,24 @@
 		</div>
 	</div>
 
-	<div class="col-md-4" style="background-color: #0d0d0d;; height: 100%;">
+	<div class="col-md-4" style="background-color: #0d0d0d; height: 100%;opacity:1">
+	<br>
 		<div class="row" style="background-color: #0d0d0d;">
-			<h5 style="color: #ffffff;">Book Your Vehicle Now</h5>
-		</div>
-		<br>
-		<div class="row" style="background-color: #0d0d0d;">
-			<input type="text" class="form-control" placeholder="Search"
-				name="search" style="width: 100%" />
-		</div>
-		<hr>
-		<div>
-			<span style="color: #ffffff; font-size: 15px">We love good
-				travel stories!</span><br> <span
-				style="color: #ffffff; font-size: 15px">We want to keep you
-				simple and to the place in better point.</span><br> <span
-				style="color: #ffffff; font-size: 15px">Therefore, join us
-				with fly around the word.</span>
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<div class="row">
+					<div class="col-md-8">
+						<input type="range" name="costRange" id="costRange" min="0" max="10000" onchange="updatetxtField(this.value)"/>
+					</div>
+					<div class="col-md-1">
+						<input type="number" value="0" name="rangeShowingTxtField" id="rangeShowingTxtField" style="width: 100px;height: 25px ;border-radius:5px;color: #000000" max="10000" min="0"/>
+					</div>			
+				</div>
+				<br>
+			   <input type="text" class="form-control" placeholder="name of searching vehicle" name="searchTxt" id="searchTxt" style="width: 100%;height: 25px" style=";color: #000000" value=""/>
+			   <button id="homeScreenSearchBtn" style="width: 100%;height: 25px" type="button" class="btn btn-xs" onclick="getSearchResult()">Search</button>
+			</div>
+			<div class="col-md-1"></div>			
 		</div>
 		<br>
 	</div>

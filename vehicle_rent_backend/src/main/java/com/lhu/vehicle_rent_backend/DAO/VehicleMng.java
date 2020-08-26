@@ -12,5 +12,5 @@ public interface VehicleMng {
 
 	public List<Vehicle> getVehicles(User user);
 
-	//public List<Vehicle> getVehiclesByUser(User user);
+	public List<Vehicle> getVehicles(String rangeVal,String searchVal);
 }

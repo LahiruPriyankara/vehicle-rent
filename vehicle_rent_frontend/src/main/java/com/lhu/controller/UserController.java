@@ -75,6 +75,7 @@ public class UserController {
 			HttpServletRequest request) {
 		log.debug("Enter | singUp");
 		try {
+			user.setRole("C");
 			if (userMgnBl.getUser(user.getEmail(), null) != null) {
 				log.debug("Info | There are some validation errors");
 				results.rejectValue("email", null, "This email is already taken,try with new one!");

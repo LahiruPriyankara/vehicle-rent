@@ -78,6 +78,12 @@ public class UserMgnBlImpl implements UserMgnBl {
 		log.debug("Enter | getVehicles");
 		return vehicleMngImpl.getVehicles(user);
 	}
+	
+	@Override
+	public List<Vehicle> getVehicles(String rangeVal,String searchVal){
+		log.debug("Enter | getVehicles");
+		return vehicleMngImpl.getVehicles(rangeVal,searchVal);
+	}
 
 	@Override
 	public boolean updateVehicle(Vehicle vehicle) {

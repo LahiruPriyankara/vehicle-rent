@@ -76,14 +76,14 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+					<%-- 	<div class="form-group">
 							<label class="control-label col-md-2">Role</label>
 							<div class="col-md-10 validate">
 								<!-- 	<sf:radiobutton path="role" value="S" label="SUPPLIER"/> -->
 								<sf:radiobuttons path="role" items="${roleList}" />
 
 							</div>
-						</div>
+						</div> --%>
 
 						<div class="form-group">
 							<label class="control-label col-md-2">Image</label>

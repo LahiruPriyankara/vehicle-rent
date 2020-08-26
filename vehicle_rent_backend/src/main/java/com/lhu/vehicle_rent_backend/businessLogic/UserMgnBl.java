@@ -37,5 +37,7 @@ public interface UserMgnBl {
 	public Book getBook(int id);
 
 	public List<Book> getBooks(User user);
+	
+	public List<Vehicle> getVehicles(String rangeVal,String searchVal);
 
 }

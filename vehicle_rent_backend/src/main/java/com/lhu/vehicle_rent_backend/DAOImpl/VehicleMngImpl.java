@@ -96,4 +96,34 @@ public class VehicleMngImpl implements VehicleMng {
 			session.close();
 		}
 	}
+	@Override
+	public List<Vehicle> getVehicles(String rangeVal,String searchVal) {
+		try {
+			log.debug("Enter | getVehicles");
+			session = DbConfig.sessionBulder();
+			Query query = null;
+			String hqlQuery = "from Vehicle";
+			boolean isRangeGiven = ((rangeVal != null)&&(!rangeVal.equalsIgnoreCase("")))? true:false;
+			
+			if(isRangeGiven){
+				hqlQuery = hqlQuery + " where perDay='"+rangeVal+"'";
+			}
+			if((searchVal != null)&&(!searchVal.equalsIgnoreCase(""))){
+				if(isRangeGiven){
+					hqlQuery = hqlQuery + " and name='"+searchVal+"'";
+				}else{
+				    hqlQuery = hqlQuery + " where name='"+searchVal+"'";
+				}
+			}
+			query = session.createQuery(hqlQuery);
+			List<Vehicle> list = query.list();
+			log.debug("Info | getVehicles list.size() : " + list.size());
+			return list;
+		} catch (Exception e) {
+			return new ArrayList<Vehicle>();
+		} finally {
+			log.debug("Left | getVehicles");
+			session.close();
+		}
+	}
 }

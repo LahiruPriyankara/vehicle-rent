@@ -70,7 +70,7 @@ public class HomeController {
 	public ModelAndView getAvilbleVehicleData() {
 		ModelAndView mv = new ModelAndView("homePageContext/availableVehicle");
 		try {
-			log.debug("Enter | home");
+			log.debug("Enter | getAvilbleVehicleData");
 			mv.addObject("vehicles", userMgnBl.getVehicles(null));
 
 		} catch (Exception e) {
@@ -83,7 +83,7 @@ public class HomeController {
 	public ModelAndView getUserProfileData(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("user/userBookingAndUploadedVehicle");
 		try {
-			log.debug("Enter | home");
+			log.debug("Enter | getUserProfileData");
 			//int uID = Integer.parseInt(id);
 			HttpSession session = request.getSession();
 			User user = session.getAttribute("userInfo") != null ? (User) (session.getAttribute("userInfo")): new User();
@@ -93,6 +93,20 @@ public class HomeController {
 			System.out.println("vList  : "+vList.size()+"  | bList  : "+bList.size());
 			mv.addObject("vehicles", vList);
 			mv.addObject("books", bList);
+			mv.addObject("isAllData", false);
+
+		} catch (Exception e) {
+			log.debug("Exception : " + e);
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value = "getSearchVehicleData/{rangeVal}/{searchVal}")
+	public ModelAndView getSearchVehicleData(@PathVariable("rangeVal") String rangeVal,@PathVariable("searchVal") String searchVal) {
+		ModelAndView mv = new ModelAndView("user/userBookingAndUploadedVehicle");
+		try {
+			log.debug("Enter | getSearchVehicleData");
+			mv.addObject("vehicles", userMgnBl.getVehicles(rangeVal,searchVal));
 
 		} catch (Exception e) {
 			log.debug("Exception : " + e);
@@ -104,16 +118,25 @@ public class HomeController {
 	public ModelAndView getAllSysDataForAdmin(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("user/userBookingAndUploadedVehicle");
 		try {
-			log.debug("Enter | home");
+			log.debug("Enter | getAllSysDataForAdmin");
 			//int uID = Integer.parseInt(id);
 			HttpSession session = request.getSession();
 			User user = session.getAttribute("userInfo") != null ? (User) (session.getAttribute("userInfo")): new User();
 			System.out.println("user : "+user.toString());
+			List<User> uList = new ArrayList<>();
+			
+			if(user.getRole().equalsIgnoreCase("A")){
+				uList = userMgnBl.getUsers();
+			}
+			
 			List<Vehicle> vList = userMgnBl.getVehicles(null);
 			List<Book> bList = userMgnBl.getBooks(null);
-			System.out.println("vList  : "+vList.size()+"  | bList  : "+bList.size());
+			System.out.println("uList  : "+uList.size()+" | vList  : "+vList.size()+"  | bList  : "+bList.size());
+			
+			mv.addObject("users", uList);
 			mv.addObject("vehicles", vList);
 			mv.addObject("books", bList);
+			mv.addObject("isAllData", true);
 
 		} catch (Exception e) {
 			log.debug("Exception : " + e);
@@ -138,7 +161,6 @@ public class HomeController {
 	public List roleList() {
 		List<String> rTypelist = new ArrayList();
 		rTypelist.add("ADMIN");
-		rTypelist.add("SUPPLIER");
 		rTypelist.add("CUSTOMER");
 		return rTypelist;
 	}

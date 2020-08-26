@@ -16,8 +16,7 @@
 			<li><a href="#about">ABOUT</a></li>
 			<li><a href="#services">SERVICES</a></li>
 			<li><a href="#contact">CONTACT</a></li>
-			<li><a href="#"
-				onclick="getUserProfileData('/vehicle_rent_backend/main/getAllSysDataForAdmin')">SUMMARY</a></li>
+
 			<span>&nbsp;&nbsp;&nbsp;</span>
 			<li>
 				<button id="control" type="button" class="btn btn-xs"
@@ -34,18 +33,24 @@
 			</li>
 			<%
 				if (isloggedUser) {
-			%>
+			%>			
 			<li>&nbsp;&nbsp;&nbsp;
-				<button type="button" style="margin-top: 7px; height: 35px;"
-					onclick="getAvilbleVehicleData()">VIEW VEHICLE</button>
+				<button type="button" style="margin-top: 7px; height: 35px;" onclick="getAvilbleVehicleData('/vehicle_rent_backend/main/getAvilbleVehicleData')">PROF DATA</button>
+		    </li>
+		    <% if (loggedUser.getRole().equalsIgnoreCase("A")) { %>
+			<li>
+			    &nbsp;&nbsp;&nbsp;
+				<button type="button" style="margin-top: 7px; height: 35px;" onclick="getUserProfileData('/vehicle_rent_backend/main/getAllSysDataForAdmin')">SUMMARY</button>
+			</li>
+			<%}%>
+			<li>
 				&nbsp;&nbsp;&nbsp;
-				<button type="button" style="margin-top: 7px"
-					onclick="getUserProfileData('/vehicle_rent_backend/main/getUserProfileData')">
-					<img src="${images}/userImage/<%= loggedUser.getImage() %>.jpg"
-						alt="" style="width: 35px; height: 30px;">&nbsp;&nbsp;&nbsp;
-					<%=loggedUser.getName()%>
+				<button type="button" style="margin-top: 7px" onclick="getUserProfileData('/vehicle_rent_backend/main/getUserProfileData')">
+					<img src="${images}/userImage/<%= loggedUser.getImage() %>.jpg" alt="" style="width: 35px; height: 30px;">
+					 &nbsp;&nbsp;&nbsp; <%=loggedUser.getName()%>
 				</button>
 			</li>
+			
 			<li><a href="${contextRoot}/vehicle_rent_backend/User/singOff"
 				style="margin-top: -5px"> <img src="${images}/signOff.png"
 					alt="" style="width: 30px; height: 30px;">

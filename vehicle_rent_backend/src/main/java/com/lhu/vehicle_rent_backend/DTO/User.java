@@ -42,9 +42,9 @@ public class User implements java.io.Serializable {
 	private String tp = "";
 	@NotBlank(message = "Please enter the role")
 	private String role = "";
-	@NotBlank(message = "Please enter the image")
+	//@NotBlank(message = "Please enter the image")
 	private String image = "";
-	@NotBlank(message = "Please enter the status")
+	//@NotBlank(message = "Please enter the status")
 	private String status = "";
 
 	@Transient

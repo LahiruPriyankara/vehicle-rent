@@ -29,6 +29,7 @@
 
 						<sf:hidden path="id" />
 						<sf:hidden path="image"/>
+						<sf:hidden path="role"/>
 						<div class="form-group">
 							<label class="control-label col-md-3">Email</label>
 							<div class="col-md-9 validate">
@@ -48,15 +49,16 @@
 								<sf:input path="tp" class="form-control" placeholder="TP Number" />
 							</div>
 						</div>
-
-						<div class="form-group">
-							<label class="control-label col-md-3">Role</label>
-							<div class="col-md-9 validate">
-								<!-- 	<sf:radiobutton path="role" value="S" label="SUPPLIER"/> -->
-								<sf:radiobuttons path="role" items="${roleList}" />
-
+                       <%if(loggedUser.getRole().equalsIgnoreCase("A")){%>
+							<div class="form-group">
+								<label class="control-label col-md-3">Role</label>
+								<div class="col-md-9 validate">
+									<!-- 	<sf:radiobutton path="role" value="S" label="SUPPLIER"/> -->
+									<sf:radiobuttons path="role" items="${roleList}" />
+	
+								</div>
 							</div>
-						</div>
+						<%} %>
 						<div class="form-group">
 							<label class="control-label col-md-3">Image</label>
 

@@ -34,27 +34,24 @@ $(document).ready(function() {
 		});
 	});
 
-	/*
-	 * $("#dialog").dialog({ autoOpen: false, modal: true, title: "Details",
-	 * buttons: { Close: function () { $(this).dialog('close'); } } });
-	 */
-	/*
-	 * console.log("abc 1"); if(window.onAction === "singIn" &&
-	 * window.hasValidationError){ setTimeout(function(){ alert("Hello"); },
-	 * 3000);
-	 * setTimeout(function(){document.getElementById("signInBtn").click();},3000);
-	 * console.log("abc 2"); }
-	 */
-
+	$('#availableVehicleTbl').DataTable( {
+		//dom: 'Bfrtip',
+		//"paging": false,
+		"ordering": true,
+		"info": false,
+		//"bJQueryUI": true,
+		"bFilter": true,
+		//"sDom": 'R<"H"lfr>t<"F"ip>',
+		//"sPaginationType": "full_numbers",
+		"sScrollX": "100%",
+		lengthMenu:[[2,10,50,100,-1],[2,10,50,100,"All"]],
+		buttons: [
+			'copy', 'csv', 'excel', 'pdf', 'print'
+		]
+	} );
 })
 
-/*
- * window.onload = downloadFunction; function downloadFunction(){
- * console.log("abc 1"); if(window.onAction === "singIn" &&
- * window.hasValidationError){ setTimeout(function(){ alert("Hello"); }, 3000);
- * setTimeout(function(){document.getElementById("signInBtn").click();},3000);
- * console.log("abc 2"); } }
- */
+
 
 function tabActive(evt, divName) {
 	console.log(evt + " - " + divName);
@@ -231,9 +228,57 @@ function getUserProfileData(jUrl){
 			console.log("SUCCESS: ", data);
 			$('#data').empty();
 			$('#data').html(data);
-			//displaySuccess(data);
-			//$("#bookModelShowingBtn").click();
-			// setTimeout(function(){$("#bookModelShowingBtn").click();},1);
+			
+			$('#uerTbl').DataTable( {
+				//dom: 'Bfrtip',
+				dom: 'lBftip',
+				//"paging": false,
+				"ordering": true,
+				"info": false,
+				//"bJQueryUI": true,
+				"bFilter": true,
+				//"sDom": 'R<"H"lfr>t<"F"ip>',
+				//"sPaginationType": "full_numbers",
+				"sScrollX": "100%",
+				lengthMenu:[[10,50,100,-1],[10,50,100,"All"]],
+				buttons: [
+					'copy', 'csv', 'excel', 'pdf', 'print'
+				]
+			} );
+			
+			$('#vehicleTbl').DataTable( {
+				//dom: 'Bfrtip',
+				dom: 'lBftip',
+				//"paging": false,
+				"ordering": true,
+				"info": false,
+				//"bJQueryUI": true,
+				"bFilter": true,
+				//"sDom": 'R<"H"lfr>t<"F"ip>',
+				//"sPaginationType": "full_numbers",
+				"sScrollX": "100%",
+				lengthMenu:[[10,50,100,-1],[10,50,100,"All"]],
+				buttons: [
+					'copy', 'csv', 'excel', 'pdf', 'print'
+				]
+			} );
+			
+			$('#bookTbl').DataTable( {
+				//dom: 'Bfrtip',
+				dom: 'lBftip',
+				//"paging": false,
+				"ordering": true,
+				"info": false,
+				//"bJQueryUI": true,
+				"bFilter": true,
+				//"sDom": 'R<"H"lfr>t<"F"ip>',
+				//"sPaginationType": "full_numbers",
+				"sScrollX": "100%",
+				lengthMenu:[[10,50,100,-1],[10,50,100,"All"]],
+				buttons: [
+					'copy', 'csv', 'excel', 'pdf', 'print'
+				]
+			} );
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);
@@ -246,11 +291,11 @@ function getUserProfileData(jUrl){
 	
 }
 
-function getAvilbleVehicleData(){
+function getAvilbleVehicleData(jUrl){
 	$.ajax({
 		type : "POST",
 		contentType : "application/json",
-		url : "/vehicle_rent_backend/main/getAvilbleVehicleData",
+		url : jUrl,
 		data : JSON.stringify(data),
 		dataType : 'html',
 		timeout : 100000,
@@ -258,9 +303,23 @@ function getAvilbleVehicleData(){
 			console.log("SUCCESS: ", data);
 			$('#data').empty();
 			$('#data').html(data);
-			//displaySuccess(data);
-			//$("#bookModelShowingBtn").click();
-			// setTimeout(function(){$("#bookModelShowingBtn").click();},1);
+			
+			$('#availableVehicleTbl').DataTable( {
+				//dom: 'Bfrtip',
+				//"paging": false,
+				"ordering": true,
+				"info": false,
+				//"bJQueryUI": true,
+				"bFilter": true,
+				//"sDom": 'R<"H"lfr>t<"F"ip>',
+				//"sPaginationType": "full_numbers",
+				"sScrollX": "100%",
+				lengthMenu:[[2,10,50,100,-1],[2,10,50,100,"All"]],
+				buttons: [
+					'copy', 'csv', 'excel', 'pdf', 'print'
+				]
+			} );
+			
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);
@@ -271,4 +330,17 @@ function getAvilbleVehicleData(){
 		}
 	});
 	
+}
+
+function updatetxtField(val){
+	document.getElementById('rangeShowingTxtField').value = val;
+}
+function getSearchResult(){
+	
+	var rangeShowingTxtField = document.getElementById('rangeShowingTxtField').value;
+	var searchTxt = document.getElementById('searchTxt').value;
+	
+	var jUrl ="vehicle_rent_backend/main/getSearchVehicleData";
+	jUrl = jUrl+"/"+rangeShowingTxtField+"/"+searchTxt;
+	getAvilbleVehicleData(jUrl);	
 }

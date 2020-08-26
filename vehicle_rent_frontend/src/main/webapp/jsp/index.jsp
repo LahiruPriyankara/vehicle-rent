@@ -23,33 +23,49 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 
-<head>
-<%-- 
-<script>
-	window.onAction = '<%=onAction%>';
-	window.hasValidationError = '<%=hasValidationError%>';
-	console.log("01. "+window.onAction+" | "+window.hasValidationError);	
-</script>
- --%>
-<!-- Theme Made By www.w3schools.com -->
-<title>Bootstrap Theme Company Page</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<head>
+	<%-- 
+	<script>
+		window.onAction = '<%=onAction%>';
+		window.hasValidationError = '<%=hasValidationError%>';
+		console.log("01. "+window.onAction+" | "+window.hasValidationError);	
+	</script>
+	 --%>
+	<!-- Theme Made By www.w3schools.com -->
+	<title>Bootstrap Theme Company Page</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- THis also Correct
+	<link href="/vehicle_rent_backend/resources/bootsrap/css/bootstrap.min.css" rel="stylesheet">
+	 -->
+	<link href="${bootsrap}/css/bootstrap.min.css" rel="stylesheet">
+	
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+	<script src="${js}/jQuery/jquery.js"></script>
+	<script src="${bootsrap}/js/bootstrap.min.js"></script>
+	
+	
+	
+	<link href="${css}/homepage.css" rel="stylesheet">
+	<script src="${js}/homepage.js"></script>
+	
+	<link rel="stylesheet" href="${css}/dataTable/plugings/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="${css}/dataTable/plugings/buttons.dataTables.min.css">
+	
+    <!-- Data Tables -->
+    <script src="${js}/dataTable/plugins/dataExportJs/jquery.dataTables.js"></script>
+    
+    
+     <!-- Data Tables Export-->
+    <script src="${js}/dataTable/plugins/dataExportJs/dataTables.buttons.min.js"></script> 
+    <script src="${js}/dataTable/plugins/dataExportJs/jszip.min.js"></script>
+    <script src="${js}/dataTable/plugins/dataExportJs/pdfmake.min.js"></script>
+    <script src="${js}/dataTable/plugins/dataExportJs/vfs_fonts.js"></script>    
+    <script src="${js}/dataTable/plugins/dataExportJs/buttons.html5.min.js"></script>
+    <script src="${js}/dataTable/plugins/dataExportJs/buttons.print.min.js"></script>
 
-<!-- THis also Correct
-<link href="/vehicle_rent_backend/resources/bootsrap/css/bootstrap.min.css" rel="stylesheet">
- -->
-<link href="${bootsrap}/css/bootstrap.min.css" rel="stylesheet">
-
-<link href="https://fonts.googleapis.com/css?family=Montserrat"
-	rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Lato"
-	rel="stylesheet" type="text/css">
-<script src="${js}/jQuery/jquery.js"></script>
-<script src="${bootsrap}/js/bootstrap.min.js"></script>
-
-<link href="${css}/homepage.css" rel="stylesheet">
-<script src="${js}/homepage.js"></script>
 </head>
 
 <body id="myPage" data-spy="scroll" data-target=".navbar"
@@ -78,6 +94,7 @@
 			<%@include file="homePageContext/availableVehicle.jsp"%>
 		</div>
 	</div>
+	
 	<!-- Container (About Section) -->
 	<div id="about" class="container-fluid text-center">
 		<%@include file="homePageContext/about.jsp"%>
