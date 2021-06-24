@@ -1,6 +1,6 @@
 # vehicle-rent
 
-This contains two projects. 
+This contains two projects both are spring-maven projects. 
 
 One is for backend (vehicle_rent_backend) and other one is for frontend (vehicle_rent_frontend) process. 
 
