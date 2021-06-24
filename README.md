@@ -2,12 +2,13 @@
 
 This contains two projects. 
 
-One is for backend (vehicle_rent_backend) and other one is for front (vehicle_rent_frontend) end process. 
+One is for backend (vehicle_rent_backend) and other one is for frontend (vehicle_rent_frontend) process. 
 
 Both projects are develop using eclipse IDE. 
 
 VEHICLE_RENT_DATABASE is containing all the SQL files to generate the database which I have used. Database name should be ’vehicle_rent’.(MySql)
 
+I hosted those apps in tomcat 8.
 
 
 Video demonstrations of the project is available on. 
