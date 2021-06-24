@@ -22,4 +22,4 @@ FaceBook page
 		https://www.facebook.com/Nuwana-DEV-103023114964497
 
 Contact me
-        priyankaraggl@gmail	
+        priyankaraggl@gmail.com	
